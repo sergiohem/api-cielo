@@ -23,7 +23,7 @@ if (isset($_GET['order_id']) && !empty($_GET['order_id'])) {
 
     $order_id = $_GET['order_id'];
 
-    /******* IMPORTANTE ********
+    /******* OBSERVAÇÃO IMPORTANTE ********
 
 
         Na utilização de banco de dados, é necessário obter o ID do pagamento através do ID do pedido (order_id).

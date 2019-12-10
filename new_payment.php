@@ -123,7 +123,7 @@ if (isset($_POST['order_id']) &&
             // dados retornados pela Cielo
             $paymentId = $sale->getPayment()->getPaymentId();
 
-            /******* IMPORTANTE ********
+            /******* OBSERVAÇÃO IMPORTANTE ********
 
 
                 Nesta simulação, por não utilizar banco de dados, gravamos o ID do pagamento em um arquivo .txt, 
