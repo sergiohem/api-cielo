@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>API 3.0 da Cielo e PHP</title>
+    <title>API 3.0 da Cielo em PHP</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
       <div class="py-5 text-center">
         <h2>Simulação de pagamento - API PHP da Cielo</h2>
       </div>
-      <form class="needs-validation" novalidate action="new_payment.php" method="POST">
+      <form id="form_new_payment" class="needs-validation" novalidate action="new_payment.php" method="POST">
         <div class="row">
           <div class="col-md-12 order-md-6">
             <h4 class="mb-3">Dados do pagamento</h4>         
@@ -43,8 +43,8 @@
                 </div>
               </div>
               <div class="col-md-3 mb-1">
-                <label for="amount">Valor</label>
-                <input type="text" class="form-control" name="amount" id="amount" placeholder="" value="" required>
+                <label for="amount">Valor em R$</label>
+                <input type="text" class="form-control" name="amount" id="amount" onkeypress="return mascaraMoeda(this,'.',',',event);" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Valor é obrigatório.
                 </div>
@@ -59,18 +59,28 @@
           <div class="col-md-12 order-md-6">
             <h4 class="mb-3">Dados do cartão</h4>
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-2">
                 <label for="card_number">Número</label>
-                <input type="text" class="form-control" name="card_number" id="card_number" placeholder="" required>
+                <input type="text" class="form-control" name="card_number" id="card_number" maxlength="19" onkeypress="return somenteNumeros(event);" placeholder="" required>
                 <div class="invalid-feedback">
                   Número do cartão é obrigatório.
                 </div>
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-2">
                 <label for="card_number">Nome impresso</label>
                 <input type="text" class="form-control" name="card_holder" id="card_holder" placeholder="" required>
                 <div class="invalid-feedback">
                   Nome impresso é obrigatório.
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label for="card_type">Tipo</label>
+                <div class="radio">
+                  <label class="radio-inline"><input type="radio" name="card_type" value="credit" checked="true"> Crédito</label>
+                  <label class="radio-inline col-md-4 mb-2"><input type="radio" name="card_type" value="debit"> Débito</label>
+                </div>
+                <div class="invalid-feedback">
+                  Tipo do cartão é obrigatório.
                 </div>
               </div>
             </div>
@@ -88,14 +98,14 @@
               </div>
               <div class="col-md-4 mb-2">
                 <label for="card_expiration">Vencimento</label>
-                <input type="text" class="form-control" name="card_expiration" id="card_expiration" placeholder="Ex.: 01/2022" required>
+                <input type="text" class="form-control" name="card_expiration" id="card_expiration" maxlength="7" onkeypress="return dateCardExpirationMask(this, event);" placeholder="Ex.: 01/2022" required>
                 <div class="invalid-feedback">
                   Vencimento do cartão é obrigatório.
                 </div>
               </div>
               <div class="col-md-4 mb-2">
                 <label for="card_security_code">Código de segurança</label>
-                <input type="text" class="form-control" name="card_security_code" id="card_security_code" placeholder="" required>
+                <input type="text" class="form-control" name="card_security_code" id="card_security_code" maxlength="3" onkeypress="return somenteNumeros(event);" placeholder="" required>
                 <div class="invalid-feedback">
                   Código de segurança é obrigatório.
                 </div>
@@ -117,6 +127,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/holder.min.js"></script>
+    <script src="js/new_payment.min.js"></script>
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
